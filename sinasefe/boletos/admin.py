@@ -116,6 +116,8 @@ class BoletoAdmin(ImportExportModelAdmin):
         # admin/superuser vê tudo
         if request.user.is_superuser:
             return qs
+        if request.user.groups.filter(name="Diretoria").exists():
+            return qs
 
         # usuários normais veem apenas seus registros
         return qs.filter(codigo_pagador=request.user.username)
