@@ -2,7 +2,20 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from pathlib import Path
 
+import environ
+
+env = environ.Env()
+
+
+BASE_DIR = Path(__file__).parent.parent
+ENV_PATH = BASE_DIR.joinpath(".env")
+environ.Env.read_env(BASE_DIR.joinpath(".env"))
+
+DEBUG = env.bool("DJANGO_DEBUG")
+
+print(DEBUG)
 
 def main():
     """Run administrative tasks."""
