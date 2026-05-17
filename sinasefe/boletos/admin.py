@@ -100,6 +100,7 @@ class BoletoAdmin(ImportExportModelAdmin):
         QuitadoComOutroBoletoFilter,
         BaixadoFilter,
         "data_pagamento",
+        "nome_pagador"
     )
     search_fields = ("nome_pagador", "nosso_numero", "seu_numero")
     resource_classes = [BoletoResource]
