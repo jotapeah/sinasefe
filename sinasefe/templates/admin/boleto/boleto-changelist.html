@@ -1,12 +1,12 @@
 {# templates/admin/pedido_changelist.html #}
 
 {% extends "admin/change_list.html" %}
-{% load humanize %}
+{% load i18n %}
 {% load l10n %}
 
 {% block result_list %}
     <div style="padding:10px 0; font-weight:bold;">
-        Soma total: R$ {{ total_valor|localize }}
+        Soma total: R$ {{ total_valor|floatformat:2 }}
     </div>
 
     {{ block.super }}

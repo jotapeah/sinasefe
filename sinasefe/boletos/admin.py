@@ -109,6 +109,16 @@ class BoletoAdmin(ImportExportModelAdmin):
     change_list_template = 'admin/boleto/boleto-changelist.html'
     raw_id_fields = ("quitado_com_boleto",)
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+
+        # admin/superuser vê tudo
+        if request.user.is_superuser:
+            return qs
+
+        # usuários normais veem apenas seus registros
+        return qs.filter(codigo_pagador=request.user.username)
+
     def changelist_view(self, request, extra_context=None):
         response = super().changelist_view(request, extra_context=extra_context)
 
@@ -116,16 +126,17 @@ class BoletoAdmin(ImportExportModelAdmin):
             qs = response.context_data['cl'].queryset
             total = qs.aggregate(total=Sum('valor'))['total'] or Decimal('0')
 
-            total_formatado = (
-                f'{total:,.2f}'
-                .replace(',', 'X')
-                .replace('.', ',')
-                .replace('X', '.')
-            )
+            # total_formatado = (
+            #     f'{total:,.2f}'
+            #     .replace(',', 'X')
+            #     .replace('.', ',')
+            #     .replace('X', '.')
+            # )
 
         except (AttributeError, KeyError):
-            total_formatado = '0,00'
+            pass
+            # total_formatado = '0'
 
-        response.context_data['total_valor'] = total_formatado
+        response.context_data['total_valor'] = total
 
         return response

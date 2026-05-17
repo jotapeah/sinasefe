@@ -36,6 +36,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "sinasefe.urls"
@@ -91,7 +92,15 @@ LANGUAGE_CODE = "pt-br"
 TIME_ZONE = "America/Porto_Velho"
 
 USE_I18N = True
-USE_L10N = True
+
+
+USE_THOUSAND_SEPARATOR = True
+
+DECIMAL_SEPARATOR = ","
+
+THOUSAND_SEPARATOR = "."
+
+NUMBER_GROUPING = 3
 
 USE_TZ = True
 
