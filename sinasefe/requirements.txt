@@ -1,4 +1,3 @@
 django
 django-import-export[xls,xlsx]
 django-environ
-python-dotenv
