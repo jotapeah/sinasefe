@@ -62,7 +62,7 @@ class BoletoReemitidoFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value() == "sim":
-            return queryset.filter(seu_numero__icontains="/")
+            return queryset.filter(seu_numero__iregex=r"/\d$")
         return queryset
 
 class BaixadoFilter(admin.SimpleListFilter):
