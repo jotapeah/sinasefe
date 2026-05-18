@@ -38,10 +38,10 @@ class QuitadoComOutroBoletoFilter(admin.SimpleListFilter):
     parameter_name = "pago_outro_boleto"
 
     def lookups(self, request, model_admin):
-        return (
+        return [
             ("sim", "Sim"),
             ("nao", "Não"),
-        )
+        ]
 
     def queryset(self, request, queryset):
         if self.value() == "sim":
@@ -56,9 +56,9 @@ class BoletoReemitidoFilter(admin.SimpleListFilter):
     parameter_name = "reemitido"
 
     def lookups(self, request, model_admin):
-        return (
+        return [
             ("sim", "Sim"),
-        )
+        ]
 
     def queryset(self, request, queryset):
         if self.value() == "sim":
@@ -70,10 +70,10 @@ class BaixadoFilter(admin.SimpleListFilter):
     parameter_name = "baixado"
 
     def lookups(self, request, model_admin):
-        return (
+        return [
             ("sim", "Sim"),
             ("nao", "Não"),
-        )
+        ]
 
     def queryset(self, request, queryset):
         if self.value() == "sim":
