@@ -2,9 +2,10 @@ from decimal import Decimal, InvalidOperation
 
 from import_export.fields import Field
 from import_export.resources import ModelResource
-from import_export.widgets import DateWidget, DecimalWidget, IntegerWidget, Widget
+from import_export.widgets import DateWidget, IntegerWidget, Widget
 
 from .models import Boleto
+
 
 class BRDecimalWidget(Widget):
     def clean(self, value, row=None, *args, **kwargs):
@@ -18,10 +19,11 @@ class BRDecimalWidget(Widget):
 
         try:
             if "," in value:
-                value = value.replace(".", "").replace(",", ".")
+                value = value.replace("R$", "").replace(".", "").replace(",", ".")
             return Decimal(value)
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor inválido no import: {value}")
+
 
 class BoletoResource(ModelResource):
     nome_pagador = Field(attribute="nome_pagador", column_name="Nome Pagador")
