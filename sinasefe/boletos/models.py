@@ -35,6 +35,8 @@ class Boleto(models.Model):
         null=True,
         blank=True,
     )
+    observacao = models.TextField(verbose_name="Observação", null=True, blank=True)
+    considerar_pago = models.BooleanField(verbose_name="Considerar Pago", default=False)
 
     class Meta:
         verbose_name = "Boleto"

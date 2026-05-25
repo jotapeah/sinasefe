@@ -23,15 +23,12 @@ class BoletoCustomFilter(admin.SimpleListFilter):
         if self.value() == "mais_60":
             data_limite = timezone.now().date() - timedelta(days=60)
 
-
             return queryset.filter(
-                (
-                    Q(data_pagamento__isnull=True)
-                    & Q(data_vencimento__lte=data_limite)
-                )
+                (Q(data_pagamento__isnull=True) & Q(data_vencimento__lte=data_limite))
             ).order_by("nome_pagador")
 
         return queryset
+
 
 class QuitadoComOutroBoletoFilter(admin.SimpleListFilter):
     title = "Pago c/ outro boleto"
@@ -65,6 +62,7 @@ class BoletoReemitidoFilter(admin.SimpleListFilter):
             return queryset.filter(seu_numero__iregex=r"/\d$")
         return queryset
 
+
 class BaixadoFilter(admin.SimpleListFilter):
     title = "Baixado"
     parameter_name = "baixado"
@@ -93,22 +91,39 @@ class BoletoAdmin(ImportExportModelAdmin):
         "nosso_numero",
         "seu_numero",
         "valor",
+        "considerar_pago",
     )
     list_filter = (
+        "considerar_pago",
+        "data_pagamento",
         BoletoCustomFilter,
         BoletoReemitidoFilter,
         QuitadoComOutroBoletoFilter,
         BaixadoFilter,
-        "data_pagamento",
-        "nome_pagador"
+        "nome_pagador",
     )
     search_fields = ("nome_pagador", "nosso_numero", "seu_numero")
     resource_classes = [BoletoResource]
     ordering = ["nome_pagador", "data_vencimento"]
     date_hierarchy = "data_vencimento"
     list_per_page = 1000
-    change_list_template = 'admin/boleto/boleto-changelist.html'
+    change_list_template = "admin/boleto/boleto-changelist.html"
     raw_id_fields = ("quitado_com_boleto",)
+    readonly_fields = [
+        "nome_pagador",
+        "data_baixa",
+        "data_pagamento",
+        "data_vencimento",
+        "nosso_numero",
+        "seu_numero",
+        "valor",
+        "identificacao",
+        "parcela",
+        "total_parcelas",
+        "codigo_pagador",
+        "valor_liquidacao_titulo",
+    ]
+    # list_editable = ("considerar_pago",)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -126,8 +141,8 @@ class BoletoAdmin(ImportExportModelAdmin):
         response = super().changelist_view(request, extra_context=extra_context)
 
         try:
-            qs = response.context_data['cl'].queryset
-            total = qs.aggregate(total=Sum('valor'))['total'] or Decimal('0')
+            qs = response.context_data["cl"].queryset
+            total = qs.aggregate(total=Sum("valor"))["total"] or Decimal("0")
 
             # total_formatado = (
             #     f'{total:,.2f}'
@@ -137,9 +152,8 @@ class BoletoAdmin(ImportExportModelAdmin):
             # )
 
         except (AttributeError, KeyError):
-            pass
-            # total_formatado = '0'
+            total = 0
 
-        response.context_data['total_valor'] = total
+        response.context_data["total_valor"] = total
 
         return response
