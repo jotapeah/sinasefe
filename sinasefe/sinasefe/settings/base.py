@@ -6,14 +6,11 @@ env = environ.Env()
 
 BASE_DIR = Path(__file__).parent.parent.parent
 
-
 SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = True
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-
-# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,15 +52,7 @@ TEMPLATES = [
     },
 ]
 
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASES = {"default": env.db()}
-
-
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -80,16 +69,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = "pt-br"
 
 TIME_ZONE = "America/Porto_Velho"
 
 USE_I18N = True
-
 
 USE_THOUSAND_SEPARATOR = True
 
@@ -101,11 +85,8 @@ NUMBER_GROUPING = 3
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
-
 STATIC_URL = "static/"
+
 STATIC_ROOT = "collected_statics/"
 
 LOGIN_REDIRECT_URL = "/admin"
