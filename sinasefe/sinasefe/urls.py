@@ -28,3 +28,7 @@ urlpatterns = [
     path("", home, name="home"),
     path("admin/", admin.site.urls),
 ]
+
+admin.site.site_header = "Administração  - SINASEFE"
+admin.site.site_title = "Site de administração - SINASEFE"
+admin.site.index_title = ""
