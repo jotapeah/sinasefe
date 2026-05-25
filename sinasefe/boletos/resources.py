@@ -24,6 +24,12 @@ class BRDecimalWidget(Widget):
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor inválido no import: {value}")
 
+    def render(self, value, obj=None, **kwargs):
+        if value is None:
+            return ""
+
+        return f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
 
 class BoletoResource(ModelResource):
     nome_pagador = Field(attribute="nome_pagador", column_name="Nome Pagador")
