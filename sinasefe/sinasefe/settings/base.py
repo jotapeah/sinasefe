@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import environ
@@ -60,9 +59,7 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    "default": env.db()
-}
+DATABASES = {"default": env.db()}
 
 
 # Password validation
@@ -110,3 +107,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = "collected_statics/"
+
+LOGIN_REDIRECT_URL = "/admin"
+
+LOGOUT_REDIRECT_URL = "/admin"
