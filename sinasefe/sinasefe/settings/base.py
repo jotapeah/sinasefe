@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "boletos",
+    "movimentos",
     "import_export",
 ]
 
