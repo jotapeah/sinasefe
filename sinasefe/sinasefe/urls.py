@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.http import HttpResponseRedirect
-from django.urls import path
+from django.urls import include, path
 
 
 def home(request):
@@ -27,6 +27,7 @@ def home(request):
 urlpatterns = [
     path("", home, name="home"),
     path("admin/", admin.site.urls),
+    path("boletos/", include("boletos.urls")),
 ]
 
 admin.site.site_header = "Administração  - SINASEFE"
